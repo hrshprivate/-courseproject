@@ -1,0 +1,28 @@
+{% extends  'testApp/base.html' %}
+
+{% block  title %}
+{{ title }}
+{% endblock %}
+
+{% block  content %}
+<style>
+    a.one {
+    color: green;
+    text-decoration: none;
+    font-size: 20px;
+   }
+    a.one:hover {
+    color: yellow;
+   }
+
+</style>
+
+<div class="containers">
+<div class="Box1">
+   <h1>{{ tasks.title }}</h1>
+   <p>{{ tasks.task }}</p><br><br>
+    <a href="{% url 'update' id=tasks.id %}" class="one">Изменить</a>
+  </div>
+</div>
+
+{% endblock %}

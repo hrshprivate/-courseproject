@@ -1,0 +1,76 @@
+{% extends  'testApp/base.html' %}
+{% load static %}
+{% block  title %}
+creating task
+{% endblock %}
+
+{% block  content %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet" href="{% static 'testApp/css/testApp.css' %}">
+<style>
+
+.form-control{margin-bottom:13px
+}
+
+    .modal-content {
+        margin-top: 100px;
+
+    }
+</style>
+{% if request.user.is_authenticated %}
+<div class="container">
+ <div class="row">
+ <div class="well well-sm">
+ <legend> Создание таска </legend>
+ <form method="post">{% csrf_token %}
+ <input class="form-control" name="title" required="" placeholder="Название таска" type="text" maxlength="30"/>
+ <textarea name="task" class="form-control" rows="9" cols="25" required="required" placeholder="Текст сообщения"></textarea>
+     {% if user.first_name and user.last_name %}
+<p title="Перед созданием таска, настрой профиль."> <button class="btn btn-lg btn-primary btn-block" type="submit">Отправить</button> </p>
+     {% else %}
+<p title="Перед созданием таска, настрой профиль."> <button class="btn btn-lg btn-primary btn-block" type="submit" disabled>Отправить</button> </p>
+    {% endif %}
+
+ </form>
+ </div>
+ </div>
+</div>
+
+{% else %}
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-6 shadow">
+      <div class="modal-body p-9">
+        <h2 class="fw-bold mb-0">Зарегайся, друг мой</h2>
+
+        <ul class="d-grid gap-4 my-5 list-unstyled">
+          <li class="d-flex gap-4">
+            <div>
+              <h1 class="mb-6"><i class="fas fa-users"></i>Профиль</h1>
+              Все возможные изменения.
+            </div>
+          </li>
+          <li class="d-flex gap-4">
+            <div>
+                <h1 class="mb-6"><i class="fas fa-sms"></i>Чаты</h1>
+              Переписывайся с одногруппницами.
+            </div>
+          </li>
+             <li class="d-flex gap-4">
+            <div>
+                <h1 class="mb-6"><i class="fab fa-stack-overflow"></i>Таски</h1>
+              Создавай таски и отправляй преподу прямо сейчас, без универа!
+            </div>
+          </li>
+        </ul>
+        <button onclick="document.location='{% url 'login' %}'" type="button" class="btn btn-lg btn-primary mt-5 w-100" data-bs-dismiss="modal">Вперёд</button>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+{% endblock %}

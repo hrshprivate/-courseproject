@@ -1,0 +1,112 @@
+{% extends  'testApp/base.html' %}
+{% block  title %}
+detailifnoaboutprofile
+{% endblock %}
+{% load static %}
+{% block  content %}
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="{% static 'testApp/css/detail.css' %}">
+    <link rel="shortcut icon" href="{%  static 'icons/favicon.png' %}">
+    <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
+    <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
+<style>
+    a:hover {
+  text-decoration: none;
+}
+</style>
+<body>
+    <div class="container">
+<div id="main">
+ <div class="row" id="real-estates-detail">
+ <div class="col-lg-4 col-md-4 col-xs-12">
+ <div class="panel panel-default">
+ <div class="panel-heading">
+ <header class="panel-title">
+ <div class="text-center">
+ <strong>Пользователь сайта</strong>
+ </div>
+ </header>
+ </div>
+ <div class="panel-body">
+ <div class="text-center" id="author">
+  {% if tasks.image %}
+     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+                            <img src="{{ MEDIA_URL }}{{ tasks.image.url }}" alt="">
+                     </form>
+  {% else %}
+     <img src="{% static 'testApp/img/camera_200.png' %}" alt="logo" height="200" width="200">
+  {% endif %}
+     {% if tasks.first_name and tasks.last_name %}
+ <h3>{{ tasks.first_name }} {{ tasks.last_name }}</h3>
+     {% else %}
+ <h3>{{ tasks.user }}</h3>
+     {% endif %}
+ <small class="label label-warning">Республика Беларусь</small>
+ <p>Network</p>
+ <p class="sosmed-author">
+     {% if tasks.vk %}
+     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+ <a href="{{ tasks.vk }}" target="_blank"><i class="fab fa-vk"></i></a>
+ </form>
+     {% endif %}
+     {% if tasks.tg %}
+     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+    <a href="{{ tasks.tg }}" target="_blank"><i class="fab fa-telegram"></i></a>
+ </form>
+     {% endif %}
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="col-lg-8 col-md-8 col-xs-12">
+ <div class="panel">
+ <div class="panel-body">
+ <ul id="myTab" class="nav nav-pills">
+ <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>
+ </ul>
+ <div id="myTabContent" class="tab-content">
+<hr>
+ <div class="tab-pane fade active in" id="detail">
+ <h4>Информация о пользователе</h4>
+ <table class="table table-th-block">
+ <tbody>
+    {% if tasks.data %}
+ <tr><td class="active">Дата рождения:</td><td>{{ tasks.data }}</td></tr>
+    {% else %}
+ <tr><td class="active">Дата рождения:</td><td></td></tr>
+    {% endif %}
+    {% if tasks.age %}
+ <tr><td class="active">Полных лет:</td><td>{{ tasks.age }}</td></tr>
+    {% else %}
+ <tr><td class="active">Полных лет:</td><td></td></tr>
+    {% endif %}
+     {% if tasks.address %}
+  <tr><td class="active">Адрес:</td><td>{{ tasks.address }}</td></tr>
+    {% else %}
+  <tr><td class="active">Адрес:</td><td></td></tr>
+    {% endif %}
+     {% if tasks.email %}
+ <tr><td class="active">Электронная почта:</td><td>{{ tasks.email }}</td></tr>
+    {% else %}
+ <tr><td class="active">Электронная почта:</td><td></td></tr>
+    {% endif %}
+      {% if tasks.genre %}
+ <tr><td class="active">Пол:</td><td>{{ tasks.genre }}</td></tr>
+    {% else %}
+ <tr><td class="active">Пол:</td><td></td></tr>
+    {% endif %}
+     <tr><td class="active">Рейтинг:</td><td><i class="fa fa-star" style="color:red"></i> <i class="fa fa-star" style="color:red"></i> <i class="fa fa-star" style="color:red"></i> <i class="fa fa-star" style="color:red"></i> 4/5</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+</body>
+{% endblock %}

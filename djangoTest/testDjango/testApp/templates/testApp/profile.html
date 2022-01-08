@@ -1,0 +1,239 @@
+{% extends  'testApp/base.html' %}
+{% load static %}
+{% block  title %}
+profile
+{% endblock %}
+{% block  content %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
+    <link rel="stylesheet" href="{% static 'testApp/css/profile.css' %}">
+    <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
+    <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
+
+<body>
+    <div class="container">
+<div id="main">
+ <div class="row" id="real-estates-detail">
+ <div class="col-lg-4 col-md-4 col-xs-12">
+ <div class="panel panel-default">
+ <div class="panel-heading">
+ <header class="panel-title">
+ <div class="text-center">
+ <strong>Пользователь сайта</strong>
+ </div>
+ </header>
+ </div>
+ <div class="panel-body">
+ <div class="text-center" id="author">
+  {% if tasks.image %}
+     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+                            <img src="{{ MEDIA_URL }}{{ tasks.image.url }}" alt="" height="350" width="250">
+                     </form>
+  {% else %}
+     <img src="{% static 'testApp/img/camera_200.png' %}" alt="logo" height="200" width="200">
+  {% endif %}
+     {% if tasks.first_name and tasks.last_name %}
+ <h3>{{ user.first_name }} {{ tasks.last_name }}</h3>
+     {% else %}
+ <h3>{{ request.user }}</h3>
+     {% endif %}
+ <small class="label label-warning">Республика Беларусь</small>
+ <p>Network</p>
+ <p class="sosmed-author">
+     {% if tasks.vk %}
+     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+ <a href="{{ form.vk.value }}" target="_blank"><i class="fab fa-vk"></i></a>
+ </form>
+     {% endif %}
+     {% if tasks.tg %}
+     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+    <a href="{{ form.tg.value }}" target="_blank"><i class="fab fa-telegram"></i></a>
+ </form>
+     {% endif %}
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="col-lg-8 col-md-8 col-xs-12">
+ <div class="panel">
+ <div class="panel-body">
+ <ul id="myTab" class="nav nav-pills">
+ <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>
+ <li class=""><a href="#contact" data-toggle="tab">Редактирование профиля</a></li>
+<li class=""><a href="#contacts" data-toggle="tab">Информация о других профилях</a></li>
+ </ul>
+ <div id="myTabContent" class="tab-content">
+<hr>
+ <div class="tab-pane fade active in" id="detail">
+ <h4>Информация о пользователе</h4>
+ <table class="table table-th-block">
+ <tbody>
+    {% if tasks.data %}
+ <tr><td class="active">Дата рождения:</td><td>{{ tasks.data }}</td></tr>
+    {% else %}
+ <tr><td class="active">Дата рождения:</td><td></td></tr>
+    {% endif %}
+    {% if tasks.age %}
+ <tr><td class="active">Полных лет:</td><td>{{ tasks.age }}</td></tr>
+    {% else %}
+ <tr><td class="active">Полных лет:</td><td></td></tr>
+    {% endif %}
+     {% if tasks.address %}
+  <tr><td class="active">Адрес:</td><td>{{ tasks.address }}</td></tr>
+    {% else %}
+  <tr><td class="active">Адрес:</td><td></td></tr>
+    {% endif %}
+     {% if tasks.email %}
+ <tr><td class="active">Электронная почта:</td><td>{{ tasks.email }}</td></tr>
+    {% else %}
+ <tr><td class="active">Электронная почта:</td><td></td></tr>
+    {% endif %}
+      {% if tasks.genre %}
+ <tr><td class="active">Пол:</td><td>{{ tasks.genre }}</td></tr>
+    {% else %}
+ <tr><td class="active">Пол:</td><td></td></tr>
+    {% endif %}
+     <tr><td class="active">Рейтинг:</td><td><i class="fa fa-star" style="color:red"></i> <i class="fa fa-star" style="color:red"></i> <i class="fa fa-star" style="color:red"></i> <i class="fa fa-star" style="color:red"></i> 4/5</td></tr>
+ </tbody>
+ </table>
+ </div>
+ <div class="tab-pane fade" id="contacts">
+ <p></p>
+    <h4>Другие пользователи:</h4>
+ <table class="table table-th-block">
+ <tbody>
+ <div class="wrap">
+			<h1 class="h1">Search</h1>
+			<input type="text" id="input" class="input" />
+			<div>
+				<ol class="ul">
+
+                     {% for el in qun %}
+                    {% if el.first_name and el.last_name %}
+					<li><a class="dod" href="{% url 'mono' item_id=el.id %}">{{ el.first_name }} {{ el.last_name }}</a></li>
+                    {% endif %}
+                        {% endfor %}
+
+				</ol>
+			</div>
+		</div>
+ <script>
+ window.onload = () => {
+	let input = document.querySelector('#input');
+
+	input.oninput = function() {
+		let value = this.value.trim();
+		let list = document.querySelectorAll('.ul li');
+		value
+			? list.forEach(elem => {
+					elem.innerText.search(value) == -1
+						? elem.classList.add('hide')
+						: elem.classList.remove('hide');
+			  })
+			: list.forEach(elem => {
+					elem.classList.remove('hide');
+			  });
+	};
+};
+
+</script>
+ </tbody>
+ </table>
+ </div>
+     <div class="tab-pane fade" id="contact">
+ <p></p>
+
+ <div class="form-group">
+ <label>Ваша дата рождения</label><br>
+  <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+                           <input type="date" class="form-control rounded" name="Date" value="{{ tasks.birth_date }}" id="davaToday">
+ </div>
+ <div class="form-group">
+     <label>Ваш пол</label><br>
+
+                           <select name="genre" class="form-control rounded" required="" id="id_genre">
+                               <option value="">---------</option>
+   <option value="Ж"
+   {% if tasks.genre == "Ж" %}
+                   selected
+                {%endif%}>Ж</option>
+
+   <option value="М"
+    {% if tasks.genre == "М" %}
+                   selected
+                {%endif%}>М</option>
+
+</select>
+
+ </div>
+ <div class="form-group">
+ <label>Введите ваш Адресс</label><br>
+
+                            {{ form.address }}
+
+ </div>
+  <div class="form-group">
+ <label>Введите ваш возраст</label><br>
+
+                            <input type="number" name="age" class="form-control rounded" value="{{tasks.age}}" min="0" required="" max="99" id="id_age">
+
+ </div>
+         <div class="form-group">
+ <label>Введите ваше имя</label><br>
+
+             <input type="text" name="first_name" class="form-control rounded" value="{{ tasks.first_name }}" required="" maxlength="150" id="id_first_name">
+ </div>
+
+         <div class="form-group">
+ <label>Введите вашу фамилию</label><br>
+
+                            <input type="text" name="last_name" class="form-control rounded" value="{{ tasks.last_name }}" required="" maxlength="150" id="id_last_name">
+
+ </div>
+  <div class="form-group">
+ <label>Введите ваш e-mail</label><br>
+
+                            {{ form.email }}
+
+ </div>
+  <div class="form-group">
+  <label>Выберите ваше фото</label><br>
+
+                            {{ form.image }}
+
+ </div>
+     <div class="form-group">
+  <label>Введите ваш телеграм</label><br>
+
+                            {{ form.tg }}
+
+ </div>
+     <div class="form-group">
+  <label>Введите ваш вконтакте</label><br>
+
+                            {{ form.vk }}
+
+ </div>
+
+        <div class="form-group">
+  <label>Переход на страницу смена пароля:</label><br>
+
+             <a class="test" href="{% url 'password_change' %}">EDIT</a>
+
+ </div>
+ <button type="submit" class="btn btn-success">Добавить</button>
+        <span>{{ error }}</span>
+   </form>
+
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+</body>
+{% endblock %}

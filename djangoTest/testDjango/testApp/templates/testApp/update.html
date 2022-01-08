@@ -1,0 +1,44 @@
+{% extends  'testApp/base.html' %}
+{% load static %}
+{% block  title %}
+updating task
+{% endblock %}
+
+{% block  content %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet" href="{% static 'testApp/css/testApp.css' %}">
+
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser %}
+<div class="container">
+ <div class="row">
+ <div class="well well-sm">
+ <legend> Изменение таска </legend>
+ <form method="post">{% csrf_token %}
+        {{ form.title }}<br>
+        {{ form.task }}<br>
+      <h3>{{ form.name }}</h3>
+ <button class="btn btn-lg btn-primary btn-block" type="submit">Отправить</button>
+ </form>
+ </div>
+ </div>
+</div>
+    {% else %}
+ <div class="container">
+ <div class="row">
+ <div class="well well-sm">
+ <legend> Изменение таска </legend>
+ <form method="post">{% csrf_token %}
+        {{ form.title }}<br>
+        {{ form.task }}<br>
+        {{ form.name.as_hidden }}<br>
+ <button class="btn btn-lg btn-primary btn-block" type="submit">Отправить</button>
+ </form>
+ </div>
+ </div>
+</div>
+    {% endif %}
+{% endif %}
+{% endblock %}

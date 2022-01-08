@@ -1,0 +1,134 @@
+{% extends  'testApp/base.html' %}
+{% load static %}
+{% block  title %}
+{{ title }}
+{% endblock %}
+
+{% block  content %}
+<link rel="stylesheet" href="{% static 'testApp/css/testApp.css' %}">
+<style>
+    a.one {
+    color: green;
+    text-decoration: none;
+    font-size: 20px;
+   }
+    a.two {
+    color: pink;
+    text-decoration: none;
+    font-size: 20px;
+   }
+
+    a.two:hover {
+    transform: scale(1.05);
+    color: yellow;
+}
+
+    a.one:hover {
+    color: pink;
+   }
+
+    h2 {
+    color: white;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
+   }
+
+    p {
+    color: black;
+   }
+   h3 {
+    color: blue;
+   }
+
+</style>
+{% if request.user.is_superuser %}
+    {% if tasks %}
+
+        {% for example in examples %}
+
+            <div class="justbox"><h2>{{ example.Name }}</h2></div>
+
+                     {% for item in example.example.all %}
+
+
+            <div class="containers">
+<div class="Box1">
+   <h1>{{ item.title }}</h1>
+
+   <p>{{ item.task }}</p><br><br>
+    <div class="lox">
+    <a href="{% url 'update' id=item.id %}" class="one">Изменить</a>
+    </div>
+</div>
+
+                    {% endfor %}
+        {% endfor %}
+    {% else %}
+
+ <div id="video-bg">
+            <video class="video__media" src="{% static 'testApp/video/video.mp4' %}" autoplay muted loop></video>
+        <div class="intro__content">
+                <h1 class="intro__title">Таски закончились, создавай новые!</h1>
+        </div>
+</div>
+    {% endif %}
+
+
+{% else %}
+                         {% if not test %}
+ <div id="video-bg">
+            <video class="video__media" src="{% static 'testApp/video/video.mp4' %}" autoplay muted loop></video>
+        <div class="intro__content">
+                <h1 class="intro__title">Таски закончились, создавай новые!</h1>
+        </div>
+</div>
+
+                         {% endif %}
+                        {% if test %}
+                         <div class="justbox"><h2>{{ user.first_name }} {{ user.last_name }}</h2></div>
+                         {% endif %}
+     {% for el in tasks %}
+        {% if el.author == request.user %}
+             {% if el.name == 'Ваша работа пока без оценки!' %}
+<form method="post">
+        {% csrf_token %}
+
+            <div class="containers">
+                <div class="Box1">
+                   <h1>{{ el.title }}</h1>
+
+                   <p>{{ el.task }}</p>
+
+                    <div class="petr" align="center"><h3>{{ el.name }}</h3></div>
+                     <div class="lox">
+                    <a href="{% url 'update' id=el.id %}" class="one">Изменить</a>
+                    </div>
+                  </div>
+            </div>
+</form>
+            {% else %}
+
+                <div class="containers">
+                <div class="Box1">
+                   <h1>{{ el.title }}</h1>
+
+                   <p>{{ el.task }}</p>
+
+                    <div class="petr" align="center"><h3>{{ el.name }}</h3></div>
+                     <div class="lox">
+                        <a href="{% url 'update' id=el.id %}" class="one">Изменить</a>
+                            <div class="BOX">
+                        <a href="{% url 'delete' task_id=el.id %}" class="two">Удалить</a>
+                    </div>
+                        </div>
+
+                  </div>
+            </div>
+            {% endif %}
+        {% endif %}
+
+     {% endfor %}
+{% endif %}
+{% endblock %}
