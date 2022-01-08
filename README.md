@@ -1,4 +1,5 @@
 # -courseproject
-python django + sqlite3(На хосте использовал Mysql) +  php.admin
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# -Python Django
+# -SQlite + MySql(Host Only)
+
 Ссылка на сайт: http://lollolc7.beget.tech/
